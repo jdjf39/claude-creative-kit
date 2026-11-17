@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>Acme ad · Storm (vertical)</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      @font-face {
+        font-family: Inter;
+        src: url("assets/inter.woff2") format("woff2");
+        font-weight: 100 900;
+        font-display: block;
+      }
+    </style>
+    <link rel="stylesheet" href="storm.css" />
+  </head>
+  <body>
+    <div id="root" data-composition-id="storm_v" data-start="0" data-duration="22.5" data-width="1080" data-height="1920" data-fps="30">
+      <div id="scene" class="clip" data-start="0" data-duration="22.5"></div>
+    </div>
+    <script>
+      window.AD = { w: 1080, h: 1920, id: "storm_v" };
+    </script>
+    <script src="storm.js"></script>
+  </body>
+</html>

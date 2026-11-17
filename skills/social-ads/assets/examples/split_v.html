@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1080, height=1920">
+<title>Acme · Same objection. Two reps.</title>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<style>
+@font-face { font-family: "Inter"; src: url("assets/inter.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
+:root { --lime:#EDFC47; --ink:#0F0F0F; --olive:#4A5A07; --cream:#F4F1EA; --soft:#F4FDC9; --red:#E5484D; --green:#22A55B; --grey:#8C887E; --rule:#0F0F0F; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--cream); }
+#split_v { position: relative; width: 100%; height: 100%; overflow: hidden; background: var(--cream); font-family: "Inter", sans-serif; color: var(--ink); -webkit-font-smoothing: antialiased; }
+.clip { position: absolute; inset: 0; }
+.frame { position: absolute; inset: 28px; border: 1.5px solid rgba(15,15,15,.14); pointer-events: none; }
+
+.title-wrap { position: absolute; left: var(--pad); right: var(--pad); top: 50%; transform: translateY(-58%); font-weight: 800; letter-spacing: -0.045em; line-height: 0.98; }
+.tline { overflow: hidden; padding-bottom: 0.08em; }
+.tin { display: inline-block; }
+.tline + .tline .tin { color: var(--olive); }
+.title-rule { position: absolute; left: var(--pad); right: var(--pad); height: 3px; background: var(--ink); top: calc(50% + 282px); transform-origin: left center; }
+.title-kick { position: absolute; left: var(--pad); top: calc(50% + 316px); font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--grey); }
+
+.mast { position: absolute; left: var(--pad); right: var(--pad); display: flex; justify-content: space-between; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--ink); }
+.mast-rule { position: absolute; left: var(--pad); right: var(--pad); height: 2px; background: var(--ink); transform-origin: left center; }
+.divider-h { position: absolute; height: 1.5px; background: var(--ink); transform-origin: left center; }
+.divider-v { position: absolute; width: 1.5px; background: var(--ink); transform-origin: center top; }
+
+.panel { position: absolute; display: flex; flex-direction: column; gap: var(--gap); }
+.lab { font-weight: 800; letter-spacing: -0.02em; text-transform: uppercase; line-height: 1; }
+.lab-without { color: var(--grey); padding: 0.14em 0; }
+.chip-lime { display: inline-block; background: var(--lime); color: var(--ink); padding: 0.14em 0.36em; border-radius: 0.16em; }
+.line { overflow: hidden; flex-shrink: 0; display: flex; flex-direction: column; gap: 10px; --hl: 0%; }
+.spk { font-size: var(--spk); font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--grey); }
+.rep .spk { color: var(--ink); }
+.quote { font-size: var(--q); font-weight: 700; letter-spacing: -0.028em; line-height: 1.18; }
+.prospect .quote { font-weight: 500; color: #3a3833; }
+.typed { background-image: linear-gradient(var(--lime), var(--lime)); background-repeat: no-repeat; background-size: var(--hl) 100%; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+.ghost { visibility: hidden; }
+.caret { display: inline-block; position: relative; width: 0; }
+.caret::after { content: ""; position: absolute; left: 1px; top: -0.86em; width: 0.08em; height: 1.02em; background: var(--ink); }
+
+.card { background: var(--lime); border-radius: 18px; padding: 0.6em 0.75em 0.7em; box-shadow: 0 1px 0 rgba(15,15,15,.15), 0 18px 40px -18px rgba(74,90,7,.55); }
+.card-head { display: flex; align-items: center; gap: 0.4em; font-size: 0.56em; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 0.45em; color: var(--olive); }
+.card-mark svg { width: 0.9em; height: 1.08em; display: block; fill: var(--ink); }
+.card-title { flex: 1; color: var(--ink); }
+.lat { text-transform: none; background: var(--ink); color: var(--lime); padding: 0.18em 0.55em; border-radius: 99px; letter-spacing: .04em; font-variant-numeric: tabular-nums; }
+.card-q { font-weight: 800; letter-spacing: -0.03em; line-height: 1.12; }
+
+.stamp { position: absolute; mix-blend-mode: multiply; font-weight: 900; text-transform: uppercase; letter-spacing: .02em; line-height: 0.95; padding: 0.22em 0.4em 0.2em; border: 0.09em solid currentColor; border-radius: 0.12em; outline: 0.035em solid currentColor; outline-offset: 0.08em; text-align: center; background: transparent; }
+.stamp-red { color: var(--red); }
+.stamp-green { color: #1F9A55; }
+
+.big { position: absolute; left: var(--pad); top: 50%; transform: translateY(-72%); font-weight: 800; letter-spacing: -0.045em; line-height: 1.0; --hl: 0%; }
+.bw, .sw { display: inline-block; margin-right: 0.24em; }
+.bw.hi { background-image: linear-gradient(var(--lime), var(--lime)); background-repeat: no-repeat; background-size: var(--hl) 78%; background-position: 0 70%; padding: 0 0.06em; margin-left: -0.06em; }
+.sub { position: absolute; left: var(--pad); top: 50%; margin-top: 260px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.22; color: #2c2a26; }
+.sw { margin-right: 0.26em; }
+
+.chips { position: absolute; display: flex; }
+.chips-h { left: var(--pad); right: var(--pad); top: 50%; transform: translateY(-50%); justify-content: space-between; gap: 32px; }
+.chips-v { left: var(--pad); right: var(--pad); top: 50%; transform: translateY(-50%); flex-direction: column; gap: 70px; }
+.chip-col { display: flex; flex-direction: column; gap: 16px; flex: 1; }
+.chip-meta { font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--grey); padding-bottom: 14px; border-bottom: 1.5px solid var(--ink); }
+.chip-meta .num { color: var(--ink); }
+.chip { align-self: flex-start; display: inline-flex; align-items: center; gap: 0.42em; font-weight: 800; letter-spacing: -0.03em; padding: 0.42em 0.8em 0.42em 0.5em; border-radius: 99px; border: 0.09em solid var(--lime); box-shadow: 0 0 0 2px var(--ink), inset 0 0 0 2px var(--ink); background: var(--soft); white-space: nowrap; }
+.tick { width: 1.05em; height: 1.05em; border-radius: 50%; background: var(--lime); box-shadow: inset 0 0 0 2px var(--ink); display: inline-flex; align-items: center; justify-content: center; }
+.tick svg { width: 64%; height: 64%; fill: none; stroke: var(--ink); stroke-width: 3.4; stroke-linecap: round; stroke-linejoin: round; }
+
+.end { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.lockup { display: flex; align-items: center; }
+.end-h .lockup { gap: 56px; }
+.end-v .lockup { flex-direction: column; gap: 56px; }
+.tile { background: var(--lime); display: flex; align-items: center; justify-content: center; box-shadow: 0 30px 60px -30px rgba(74,90,7,.6); }
+.tile svg { width: 42%; height: auto; fill: var(--ink); }
+.wm { font-weight: 800; letter-spacing: -0.05em; line-height: 1; padding: 0 0.04em 0.06em; }
+.end-below { display: flex; flex-direction: column; align-items: center; gap: 30px; margin-top: 54px; }
+.end-h .end-below { flex-direction: row; gap: 36px; }
+.tag { font-weight: 600; letter-spacing: -0.02em; color: #2c2a26; }
+.pill { background: var(--lime); color: var(--ink); font-weight: 800; letter-spacing: -0.02em; padding: 0.3em 0.9em; border-radius: 99px; }
+</style>
+</head>
+<body>
+<div id="split_v" data-composition-id="split_v" data-start="0" data-duration="22.5" data-width="1080" data-height="1920" data-fps="30">
+  <div class="frame"></div>
+  <div id="split_v-title" class="clip" data-start="0" data-duration="2.1" data-track-index="1"></div>
+  <div id="split_v-call" class="clip" data-start="1.85" data-duration="11.65" data-track-index="2"></div>
+  <div id="split_v-big" class="clip" data-start="13.2" data-duration="2.6" data-track-index="3"></div>
+  <div id="split_v-chips" class="clip" data-start="15.5" data-duration="3.9" data-track-index="4"></div>
+  <div id="split_v-end" class="clip" data-start="19.6" data-duration="2.9" data-track-index="5"></div>
+</div>
+<script>window.AD = { w: 1080, h: 1920 };</script>
+<script src="split.js"></script>
+<script>window.__timelines["split_v"] = window.buildSplit();</script>
+</body>
+</html>

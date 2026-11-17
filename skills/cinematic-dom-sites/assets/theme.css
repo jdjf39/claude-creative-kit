@@ -1,0 +1,177 @@
+@import 'tailwindcss';
+
+/* ============================================================================
+   CINEMATIC DOM — theme + motion system (drop-in template).
+   Cool near-black ink, ONE electric-sapphire accent, editorial type, a
+   visible-by-default reveal system with four entrance grammars.
+   Swap the colors + fonts for the client; keep the structure and the doctrine.
+   Reference lane: Polestar configurator × Porsche newsroom × Linear.
+   ============================================================================ */
+@theme {
+  /* Ink surfaces — build steps, not one flat black */
+  --color-ink: #06080c;
+  --color-ink-1: #0a0e15;
+  --color-ink-2: #10151f;
+  --color-ink-3: #161d2a;
+
+  /* Text tiers (contrast-aware) */
+  --color-fg: #eaeff7;
+  --color-fg-dim: #aab6c9;   /* ~8:1 on ink */
+  --color-fg-faint: #7d8aa1; /* ~4.8:1 — secondary/large only */
+
+  /* THE one accent — swap this hue per client, never add a second */
+  --color-accent: #2e6bff;
+  --color-accent-2: #5b8def;
+  --color-accent-ink: #f4f8ff;
+
+  /* Hairlines — translucent light, not solid */
+  --color-line: rgba(150, 170, 210, 0.12);
+  --color-line-2: rgba(150, 170, 210, 0.22);
+
+  /* Type trio — swap families; keep display/body/mono roles */
+  --font-display: 'Clash Display', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Hanken Grotesk', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+  /* Fluid display scale (ceiling ~6rem so the hero never blows out) */
+  --text-mega: clamp(2.75rem, 1.2rem + 6.6vw, 6rem);
+  --text-h1: clamp(2.25rem, 1.2rem + 4.4vw, 4.25rem);
+  --text-h2: clamp(1.9rem, 1.3rem + 2.6vw, 3rem);
+  --text-h3: clamp(1.3rem, 1rem + 1.2vw, 1.7rem);
+
+  --ease-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --animate-marquee: marquee 42s linear infinite;
+}
+
+@keyframes marquee { to { transform: translateX(-50%); } }
+@keyframes drift { 0%, 100% { transform: translate3d(0,0,0); } 50% { transform: translate3d(0,-14px,0); } }
+
+/* ============================================================ Base */
+*, *::before, *::after { border-color: var(--color-line); }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--color-ink);
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+  font-size: 16px; line-height: 1.6; letter-spacing: -0.006em;
+  -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+  overflow-x: clip; /* clip, not hidden — kills h-scroll without breaking sticky */
+}
+@layer base {
+  h1, h2, h3, h4 {
+    font-family: var(--font-display); font-weight: 600;
+    line-height: 0.98; letter-spacing: -0.025em; margin: 0; text-wrap: balance;
+  }
+}
+p { text-wrap: pretty; }
+::selection { background: var(--color-accent); color: var(--color-accent-ink); }
+:focus-visible { outline: 2px solid var(--color-accent-2); outline-offset: 3px; }
+
+/* Fine film grain so the dark never bands */
+body::after {
+  content: ''; position: fixed; inset: 0; z-index: 2; pointer-events: none;
+  opacity: 0.03; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ============================================================ Utilities */
+@utility wrap { width: 100%; margin-inline: auto; max-width: 84rem; padding-inline: 1.25rem; }
+@media (min-width: 768px) { .wrap { padding-inline: 2.5rem; } }
+
+@utility grid-faint {
+  background-image:
+    linear-gradient(rgba(150,170,210,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(150,170,210,0.06) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 72% 64% at 50% 48%, #000 18%, transparent 78%);
+  -webkit-mask-image: radial-gradient(ellipse 72% 64% at 50% 48%, #000 18%, transparent 78%);
+}
+
+.data { font-family: var(--font-mono); font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+.kicker { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.04em; color: var(--color-fg-faint); font-variant-numeric: tabular-nums; }
+
+/* ============================================================ Components */
+@layer components {
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
+    font-weight: 600; font-size: 0.92rem; letter-spacing: -0.01em;
+    padding: 0.95rem 1.6rem; border-radius: 4px; cursor: pointer; border: 1px solid transparent;
+    transition: background-color .35s var(--ease-quint), border-color .35s var(--ease-quint), color .35s var(--ease-quint), transform .35s var(--ease-quint);
+  }
+  /* solid text must clear WCAG AA at rest — often a touch darker than the token */
+  .btn-solid { background: #1f59e8; color: var(--color-accent-ink); }
+  .btn-solid:hover { background: #1748c8; }
+  .btn-outline { background: transparent; border-color: var(--color-line-2); color: var(--color-fg); }
+  .btn-outline:hover { border-color: var(--color-fg); background: rgba(255,255,255,0.04); }
+
+  .field {
+    width: 100%; background: var(--color-ink-1); border: 1px solid var(--color-line-2);
+    border-radius: 4px; padding: 0.85rem 1rem; color: var(--color-fg); font-size: 0.95rem;
+    transition: border-color .25s ease, background-color .25s ease;
+  }
+  .field::placeholder { color: var(--color-fg-faint); }
+  .field:focus { outline: none; border-color: var(--color-accent); background: var(--color-ink-2); }
+}
+
+/* ============================================================ Reveal system
+   VISIBLE BY DEFAULT. JS only flips data-shown (see Reveal.tsx via IO + timer).
+   Four grammars so the page doesn't enter every block identically. */
+.reveal { opacity: 1; }
+.reveal-wipe { opacity: 1; }
+.reveal-rise { opacity: 1; }
+
+@media (prefers-reduced-motion: no-preference) {
+  /* fade-up (default workhorse) */
+  .reveal {
+    opacity: 0; transform: translateY(var(--reveal-y, 28px)); filter: blur(var(--reveal-blur, 0px));
+    transition: opacity .85s var(--ease-quint), transform .85s var(--ease-quint), filter .85s var(--ease-quint);
+    transition-delay: var(--reveal-delay, 0s);
+  }
+  .reveal[data-shown='true'] { opacity: 1; transform: none; filter: none; }
+
+  /* left→right clip wipe */
+  .reveal-wipe {
+    opacity: 0; clip-path: inset(0 100% 0 0);
+    transition: opacity .6s var(--ease-quint), clip-path .95s var(--ease-expo);
+    transition-delay: var(--reveal-delay, 0s);
+  }
+  .reveal-wipe[data-shown='true'] { opacity: 1; clip-path: inset(0 0 0 0); }
+
+  /* rise + slight scale (cards) */
+  .reveal-rise {
+    opacity: 0; transform: translateY(16px) scale(0.965);
+    transition: opacity .8s var(--ease-quint), transform .9s var(--ease-quint);
+    transition-delay: var(--reveal-delay, 0s);
+  }
+  .reveal-rise[data-shown='true'] { opacity: 1; transform: none; }
+}
+
+/* headline line-mask: lines slide up from behind a mask, staggered per line */
+.line-mask { overflow: hidden; display: block; padding-bottom: 0.09em; }
+.line-mask > span { display: block; }
+@media (prefers-reduced-motion: no-preference) {
+  .line-mask > span {
+    transform: translateY(110%);
+    transition: transform .95s var(--ease-expo);
+    transition-delay: var(--reveal-delay, 0s);
+  }
+  .line-mask[data-shown='true'] > span { transform: none; }
+}
+
+.edge-fade-y {
+  mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
+}
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Kill ALL motion for users who ask — show everything, calmly */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important; animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important; scroll-behavior: auto !important;
+  }
+}

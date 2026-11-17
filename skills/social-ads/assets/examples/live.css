@@ -1,0 +1,481 @@
+/* Acme ad "live" · shared styles for live_h.html and live_v.html */
+:root {
+  --ink: #0b0b0c;
+  --ink2: #0f0f0f;
+  --panel: #121214;
+  --line: rgba(255, 255, 255, 0.08);
+  --lime: #edfc47;
+  --olive: #4a5a07;
+  --lime-soft: #f4fdc9;
+  --red: #e5484d;
+  --green: #22a55b;
+  --cream: #f4f1ea;
+}
+html,
+body {
+  margin: 0;
+  background: var(--ink);
+}
+body {
+  font-family: "Inter", sans-serif;
+  color: #fff;
+  -webkit-font-smoothing: antialiased;
+}
+#root {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--ink);
+}
+.clip {
+  position: absolute;
+  inset: 0;
+}
+* {
+  box-sizing: border-box;
+}
+
+/* ---------- background ---------- */
+#bg {
+  background: var(--ink);
+}
+.bg-grid {
+  position: absolute;
+  inset: -2px;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+.bg-glow {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(60% 50% at 50% 55%, rgba(237, 252, 71, 0.06), transparent 70%),
+    radial-gradient(120% 90% at 50% 50%, transparent 55%, rgba(0, 0, 0, 0.75) 100%);
+}
+.bg-noise {
+  position: absolute;
+  inset: 0;
+  opacity: 0.07;
+  mix-blend-mode: overlay;
+}
+
+/* ---------- title ---------- */
+.title {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  text-align: center;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.02;
+  color: #fff;
+  transform-origin: 50% 0%;
+}
+.title .w {
+  display: inline-block;
+}
+.title .lime {
+  color: var(--lime);
+}
+
+/* ---------- panel ---------- */
+.panel {
+  position: absolute;
+  background: linear-gradient(180deg, #151517 0%, #111113 100%);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 30px;
+  box-shadow:
+    0 40px 120px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+}
+.hdr {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  border-bottom: 1px solid var(--line);
+}
+.live-pill {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #fff;
+}
+.live-dot-wrap {
+  position: relative;
+  width: 18px;
+  height: 18px;
+}
+.live-dot,
+.live-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--red);
+}
+.live-dot {
+  box-shadow: 0 0 16px rgba(229, 72, 77, 0.8);
+}
+.live-ring {
+  background: transparent;
+  border: 2px solid var(--red);
+}
+.clock {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: rgba(255, 255, 255, 0.92);
+  letter-spacing: 0;
+}
+.sep {
+  width: 1px;
+  background: rgba(255, 255, 255, 0.16);
+}
+.call-label {
+  position: absolute;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.62);
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+.call-label b {
+  color: #fff;
+  font-weight: 700;
+}
+.chip {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--green);
+  color: #fff;
+  font-weight: 700;
+  border-radius: 999px;
+  white-space: nowrap;
+  box-shadow: 0 0 40px rgba(34, 165, 91, 0.45);
+}
+.chip svg {
+  display: block;
+}
+.chip-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  border: 2px solid var(--green);
+}
+
+/* waveform */
+.wave {
+  position: absolute;
+  left: 0;
+  right: 0;
+  border-bottom: 1px solid var(--line);
+}
+.wave svg {
+  position: absolute;
+  overflow: visible;
+}
+.wave .main {
+  fill: none;
+  stroke: var(--lime);
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 10px rgba(237, 252, 71, 0.55));
+}
+.wave .ghost {
+  fill: none;
+  stroke: rgba(237, 252, 71, 0.3);
+  stroke-width: 2.5;
+}
+.wave .mid {
+  stroke: rgba(255, 255, 255, 0.08);
+  stroke-width: 1;
+  stroke-dasharray: 2 8;
+}
+.spk {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.spk-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.spk-row i {
+  display: block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+.spk-p i {
+  background: #fff;
+}
+.spk-r i {
+  background: var(--lime);
+  box-shadow: 0 0 12px rgba(237, 252, 71, 0.8);
+}
+.spk-r {
+  color: var(--lime);
+}
+
+/* transcript */
+.ts {
+  position: absolute;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0px, #000 40px, #000 100%);
+  mask-image: linear-gradient(180deg, transparent 0px, #000 40px, #000 100%);
+}
+.ts-inner {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+}
+.ln {
+  position: relative;
+}
+.ln .who {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.72);
+  letter-spacing: 0.02em;
+}
+.ln.rep .who {
+  color: var(--lime);
+}
+.ln .tx {
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: #fff;
+}
+.ln .tx .w {
+  display: inline-block;
+}
+.ln .bar {
+  transform-origin: 50% 0%;
+  position: absolute;
+  left: 0;
+  top: 4px;
+  bottom: 4px;
+  width: 5px;
+  border-radius: 3px;
+  background: var(--lime);
+  box-shadow: 0 0 14px rgba(237, 252, 71, 0.6);
+}
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(229, 72, 77, 0.16);
+  color: #ff7b7f;
+  border: 1px solid rgba(229, 72, 77, 0.55);
+  border-radius: 999px;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+.tag i {
+  display: block;
+  border-radius: 50%;
+  background: var(--red);
+}
+
+/* suggestion column */
+.col-label {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.55);
+  white-space: nowrap;
+}
+.col-label .mk {
+  display: block;
+}
+.cards {
+  position: absolute;
+}
+.card {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  border-radius: 24px;
+}
+.card .ghost-l {
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  border: 2px solid rgba(237, 252, 71, 0.75);
+  background: rgba(237, 252, 71, 0.05);
+  box-shadow: 0 0 40px rgba(237, 252, 71, 0.12);
+}
+.card .fill-l {
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  background: var(--lime);
+  box-shadow:
+    0 0 60px rgba(237, 252, 71, 0.28),
+    0 20px 50px rgba(0, 0, 0, 0.45);
+}
+.card .ct {
+  position: relative;
+}
+.card .top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.card .brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--ink2);
+}
+.card .brand svg path {
+  fill: var(--ink2);
+}
+.card .meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.timer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  border-radius: 999px;
+  background: rgba(15, 15, 15, 0.1);
+  color: var(--ink2);
+  white-space: nowrap;
+}
+.used {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  border-radius: 999px;
+  background: var(--ink2);
+  color: var(--lime);
+  white-space: nowrap;
+}
+.card .sug {
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--ink2);
+}
+.card .pb-l {
+  font-weight: 700;
+  color: var(--olive);
+  letter-spacing: 0.01em;
+}
+.card .pb {
+  font-weight: 600;
+  color: var(--ink2);
+  letter-spacing: -0.02em;
+  border-left: 4px solid var(--olive);
+}
+/* ghost state duplicates (timer + brand in lime on outline) */
+.card .gh {
+  position: absolute;
+  inset: 0;
+}
+.card .gh .brand {
+  color: var(--lime);
+}
+.card .gh .brand svg path {
+  fill: var(--lime);
+}
+.card .gh .timer {
+  background: rgba(237, 252, 71, 0.12);
+  color: var(--lime);
+}
+.skel {
+  border-radius: 10px;
+  background: rgba(237, 252, 71, 0.16);
+}
+.card .fl {
+  position: relative;
+}
+
+/* kinetic type */
+.kin {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.kin .ph {
+  position: absolute;
+  text-align: center;
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 0.98;
+  color: #fff;
+}
+.kin .ph .lime {
+  color: var(--lime);
+  text-shadow: 0 0 40px rgba(237, 252, 71, 0.35);
+}
+
+/* end card */
+.end {
+  position: absolute;
+  inset: 0;
+}
+.tile {
+  position: absolute;
+  background: var(--lime);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 90px rgba(237, 252, 71, 0.3);
+}
+.tile svg path {
+  fill: var(--ink2);
+}
+.wordmark {
+  position: absolute;
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  color: #fff;
+  white-space: nowrap;
+}
+.tagline {
+  position: absolute;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: rgba(255, 255, 255, 0.78);
+  white-space: nowrap;
+  text-align: center;
+}
+.url {
+  position: absolute;
+  background: var(--lime);
+  color: var(--ink2);
+  font-weight: 700;
+  border-radius: 999px;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
